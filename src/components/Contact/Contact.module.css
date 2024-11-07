@@ -1,0 +1,29 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px;
+  margin-bottom: 10px;
+
+  border-radius: 8px;
+  border: 2px solid black;
+}
+
+.data p {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 5px;
+}
+
+.icon {
+  color: gray;
+  height: 16px;
+  width: 16px;
+}
+
+.btn {
+  padding: 5px;
+  cursor: pointer;
+}
