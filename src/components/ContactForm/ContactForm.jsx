@@ -1,22 +1,11 @@
 import { useId } from 'react';
 import { useDispatch } from 'react-redux';
-import * as Yup from 'yup';
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 
 import { addContact } from '../../redux/contacts/operations';
+import { contactSchema } from '../../utils/schemas';
 
 import css from './ContactForm.module.css';
-
-const contactSchema = Yup.object({
-  name: Yup.string()
-    .required('Name is required')
-    .min(3, 'Too short!')
-    .max(50, 'Too long!'),
-  number: Yup.string()
-    .required('Number is required')
-    .min(3, 'Too short!')
-    .max(50, 'Too long!'),
-});
 
 const initialValues = {
   name: '',

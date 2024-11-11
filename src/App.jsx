@@ -14,6 +14,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import ContactsPage from './pages/ContactsPage/ContactsPage';
 import AboutPage from './pages/AboutPage/AboutPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import Header from './components/Header/Header';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function App() {
 
   return (
     <div>
+      <Header />
       <h1>Phonebook</h1>
 
       <ContactForm />

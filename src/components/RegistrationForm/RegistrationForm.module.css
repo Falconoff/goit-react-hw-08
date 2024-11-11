@@ -1,0 +1,43 @@
+.form {
+  width: 400px;
+
+  border-radius: 8px;
+  border: 2px solid black;
+  margin-bottom: 20px;
+
+  padding: 10px;
+}
+
+.input {
+  width: 100%;
+  padding: 5px;
+
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: block;
+  margin-inline: auto;
+
+  padding: 5px;
+  cursor: pointer;
+}
+
+.error {
+  display: block;
+  position: absolute;
+  top: 58px;
+  left: 5px;
+
+  color: red;
+  border: 1px solid red;
+  border-radius: 5px;
+  background-color: white;
+  padding: 5px;
+
+  z-index: 2;
+}
+
+.wrapper {
+  position: relative;
+}
