@@ -3,10 +3,15 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://connections-api.goit.global/';
 
-export const authInstance = axios.create({
-  baseURL: 'https://connections-api.goit.global/',
-  headers: {},
-});
+export const authInstance = axios.create();
+
+// export const authInstance = axios.create({
+//   baseURL: 'https://connections-api.goit.global',
+//   headers: {},
+// });
+
+// token
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzMyNzEwMWM0OTVlZDZlMjVmMzk0OGUiLCJpYXQiOjE3MzEzNTg5Nzd9.4GyOmKQQ4FNfjjokZJ0uxt1CM7TEk-y6p-llvnOrj1w
 
 export const setToken = token => {
   authInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -19,10 +24,11 @@ export const clearToken = () => {
 export const register = createAsyncThunk(
   'auth/register',
   async (formData, thunkAPI) => {
-    // {"name": "Adrian Cross", "email": "across@mail.com", "password": "examplepwd12345" }
     try {
       const { data } = await authInstance.post('/users/signup', formData);
       console.log('data: ', data);
+
+      setToken(data.token);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -32,10 +38,13 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (newContact, thunkAPI) => {
+  async (formData, thunkAPI) => {
     try {
-      // const response = await axios.post('/contacts', newContact);
-      // return response.data;
+      const { data } = await authInstance.post('/users/login', formData);
+      console.log('data: ', data);
+
+      setToken(data.token);
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

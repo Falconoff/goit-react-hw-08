@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, logout, refreshUser } from './operations';
+import { register, login, logout, refreshUser } from './operations';
 
 const INITIAL_STATE = {
   user: {
@@ -12,20 +12,43 @@ const INITIAL_STATE = {
 };
 
 // Скорочуємо код редюсерів, які обробляють pending та rejected екшени всіх операцій
-const handlePending = state => {
-  state.loading = true;
-  state.error = null;
-};
+// const handlePending = state => {
+//   state.loading = true;
+//   state.error = null;
+// };
 
-const handleRejected = (state, action) => {
-  state.loading = false;
-  state.error = action.payload;
-};
+// const handleRejected = (state, action) => {
+//   state.loading = false;
+//   state.error = action.payload;
+// };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: INITIAL_STATE,
-  extraReducers: builder => builder,
+  extraReducers: builder =>
+    builder
+      .addCase(register.pending, state => {
+        state.isLoggedIn = false;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.isLoggedIn = true;
+        state.token = action.payload.token;
+        state.user = { ...action.payload.user };
+      })
+      .addCase(register.rejected, state => {
+        state.isLoggedIn = false;
+      })
+      .addCase(login.pending, state => {
+        state.isLoggedIn = false;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoggedIn = true;
+        state.token = action.payload.token;
+        state.user = { ...action.payload.user };
+      })
+      .addCase(login.rejected, state => {
+        state.isLoggedIn = false;
+      }),
   // .addCase(fetchContacts.pending, handlePending)
   // .addCase(fetchContacts.fulfilled, (state, action) => {
   //   state.loading = false;
