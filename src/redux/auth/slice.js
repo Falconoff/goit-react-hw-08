@@ -9,6 +9,8 @@ const INITIAL_STATE = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
+  isLoading: false,
+  error: null,
 };
 
 // Скорочуємо код редюсерів, які обробляють pending та rejected екшени всіх операцій
@@ -28,26 +30,48 @@ const authSlice = createSlice({
   extraReducers: builder =>
     builder
       .addCase(register.pending, state => {
-        state.isLoggedIn = false;
+        state.isLoading = true;
+        // state.isLoggedIn = false;
+        state.error = null;
       })
       .addCase(register.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.isLoggedIn = true;
         state.token = action.payload.token;
         state.user = { ...action.payload.user };
       })
-      .addCase(register.rejected, state => {
+      .addCase(register.rejected, (state, action) => {
         state.isLoggedIn = false;
+        state.isLoading = false;
+        state.error = action.payload;
       })
       .addCase(login.pending, state => {
-        state.isLoggedIn = false;
+        state.isLoading = true;
+        state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.isLoggedIn = true;
         state.token = action.payload.token;
         state.user = { ...action.payload.user };
       })
-      .addCase(login.rejected, state => {
-        state.isLoggedIn = false;
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(refreshUser.pending, state => {
+        state.isRefreshing = true;
+        state.error = null;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.isRefreshing = false;
+        state.isLoggedIn = true;
+        // state.token = action.payload.token;
+        state.user = { ...action.payload };
+      })
+      .addCase(refreshUser.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.error = action.payload;
       }),
   // .addCase(fetchContacts.pending, handlePending)
   // .addCase(fetchContacts.fulfilled, (state, action) => {

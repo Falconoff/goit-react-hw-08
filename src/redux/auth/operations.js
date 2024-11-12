@@ -23,7 +23,7 @@ export const clearToken = () => {
 
 export const register = createAsyncThunk(
   'auth/register',
-  async (formData, thunkAPI) => {
+  async (formData, thunkApi) => {
     try {
       const { data } = await authInstance.post('/users/signup', formData);
       console.log('data: ', data);
@@ -31,14 +31,14 @@ export const register = createAsyncThunk(
       setToken(data.token);
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (formData, thunkAPI) => {
+  async (formData, thunkApi) => {
     try {
       const { data } = await authInstance.post('/users/login', formData);
       console.log('data: ', data);
@@ -46,31 +46,39 @@ export const login = createAsyncThunk(
       setToken(data.token);
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
 
-export const logout = createAsyncThunk(
-  'auth/logout',
-  async (contactId, thunkAPI) => {
-    try {
-      // const response = await axios.delete(`/contacts/${contactId}`);
-      // return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
+export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
+  try {
+    // const response = await axios.delete(`/contacts/${contactId}`);
+    // return response.data;
+  } catch (error) {
+    return thunkApi.rejectWithValue(error.message);
   }
-);
+});
 
 export const refreshUser = createAsyncThunk(
   'auth/refresh',
-  async (newContact, thunkAPI) => {
+  async (_, thunkApi) => {
+    const state = thunkApi.getState();
+    const token = state.auth.token;
+
+    if (!token) {
+      return thunkApi.rejectWithValue('No token provided to refresh user data');
+    }
+
     try {
-      // const response = await axios.post('/contacts', newContact);
-      // return response.data;
+      setToken(token);
+      const { data } = await authInstance.get('/users/current');
+
+      console.log('data: ', data);
+
+      return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );

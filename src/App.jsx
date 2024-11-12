@@ -1,20 +1,25 @@
-import ContactList from './components/ContactList/ContactList';
-import SearchBox from './components/SearchBox/SearchBox';
-import ContactForm from './components/ContactForm/ContactForm';
-
-import './App.css';
 import { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts } from './redux/contacts/operations';
-import { selectError, selectLoading } from './redux/contacts/selectors';
 import { Route, Routes } from 'react-router-dom';
+
 import HomePage from './pages/HomePage/HomePage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import ContactsPage from './pages/ContactsPage/ContactsPage';
 import AboutPage from './pages/AboutPage/AboutPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+
+import ContactList from './components/ContactList/ContactList';
+import SearchBox from './components/SearchBox/SearchBox';
+import ContactForm from './components/ContactForm/ContactForm';
 import Header from './components/Header/Header';
+
+import { fetchContacts } from './redux/contacts/operations';
+import { selectError, selectLoading } from './redux/contacts/selectors';
+import { refreshUser } from './redux/auth/operations';
+
+import './App.css';
+import { selectUserIsRefreshing } from './redux/auth/selectors';
 
 function App() {
   const dispatch = useDispatch();
@@ -22,9 +27,19 @@ function App() {
   const isLoading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
+  const isRefreshing = useSelector(selectUserIsRefreshing);
+
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
+
+  if (isRefreshing) {
+    return <div>Refreshing...</div>;
+  }
 
   return (
     <div>
