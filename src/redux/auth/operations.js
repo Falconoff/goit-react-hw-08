@@ -53,8 +53,12 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
   try {
-    // const response = await axios.delete(`/contacts/${contactId}`);
-    // return response.data;
+    const { data } = await authInstance.post('/users/logout');
+
+    clearToken();
+    console.log('logout in Operations');
+
+    return data;
   } catch (error) {
     return thunkApi.rejectWithValue(error.message);
   }

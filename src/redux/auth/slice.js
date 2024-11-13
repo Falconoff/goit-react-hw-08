@@ -72,6 +72,17 @@ const authSlice = createSlice({
       .addCase(refreshUser.rejected, (state, action) => {
         state.isRefreshing = false;
         state.error = action.payload;
+      })
+      .addCase(logout.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(logout.fulfilled, () => {
+        return INITIAL_STATE;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       }),
   // .addCase(fetchContacts.pending, handlePending)
   // .addCase(fetchContacts.fulfilled, (state, action) => {
