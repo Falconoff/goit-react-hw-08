@@ -2,10 +2,7 @@ import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
 import css from './Navigation.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectUserIsLoggedIn,
-  selectUserData,
-} from '../../redux/auth/selectors';
+import { selectIsLoggedIn, selectUser } from '../../redux/auth/selectors';
 import { logout } from '../../redux/auth/operations';
 
 const buildCssClasses = ({ isActive }) =>
@@ -13,8 +10,8 @@ const buildCssClasses = ({ isActive }) =>
 
 const Navigation = () => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectUserIsLoggedIn);
-  const userData = useSelector(selectUserData);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const userData = useSelector(selectUser);
 
   const onLogout = () => {
     dispatch(logout());
@@ -26,9 +23,7 @@ const Navigation = () => {
       <NavLink className={buildCssClasses} to="/">
         Home
       </NavLink>
-      <NavLink className={buildCssClasses} to="/about">
-        About
-      </NavLink>
+
       <NavLink className={buildCssClasses} to="/contacts">
         Contacts
       </NavLink>

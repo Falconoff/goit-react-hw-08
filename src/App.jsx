@@ -6,32 +6,31 @@ import HomePage from './pages/HomePage/HomePage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import ContactsPage from './pages/ContactsPage/ContactsPage';
-import AboutPage from './pages/AboutPage/AboutPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
-import ContactList from './components/ContactList/ContactList';
-import SearchBox from './components/SearchBox/SearchBox';
-import ContactForm from './components/ContactForm/ContactForm';
+// import ContactList from './components/ContactList/ContactList';
+// import SearchBox from './components/SearchBox/SearchBox';
+// import ContactForm from './components/ContactForm/ContactForm';
 import Header from './components/Header/Header';
 
-import { fetchContacts } from './redux/contacts/operations';
-import { selectError, selectLoading } from './redux/contacts/selectors';
+// import { fetchContacts } from './redux/contacts/operations';
+// import { selectError, selectLoading } from './redux/contacts/selectors';
 import { refreshUser } from './redux/auth/operations';
 
 import './App.css';
-import { selectUserIsRefreshing } from './redux/auth/selectors';
+import { selectIsRefreshing } from './redux/auth/selectors';
 
 function App() {
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(selectLoading);
-  const error = useSelector(selectError);
+  // const isLoading = useSelector(selectLoading);
+  // const error = useSelector(selectError);
 
-  const isRefreshing = useSelector(selectUserIsRefreshing);
+  const isRefreshing = useSelector(selectIsRefreshing);
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchContacts());
+  // }, [dispatch]);
 
   useEffect(() => {
     dispatch(refreshUser());
@@ -46,10 +45,10 @@ function App() {
       <Header />
       <h1>Phonebook</h1>
 
-      <ContactForm />
+      {/* <ContactForm />
       <SearchBox />
       {isLoading && !error && <b>Request in progress...</b>}
-      <ContactList />
+      <ContactList /> */}
 
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
@@ -58,7 +57,6 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
 
-          <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
