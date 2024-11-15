@@ -25,7 +25,6 @@ const ContactsPage = () => {
 
   return (
     <div>
-      ContactsPage
       <ContactForm />
       <SearchBox />
       {isLoading && !error && <b>Request in progress...</b>}
