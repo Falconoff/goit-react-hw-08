@@ -3,7 +3,7 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://connections-api.goit.global/';
 
-export const authInstance = axios.create();
+// export const authInstance = axios.create();
 
 // export const authInstance = axios.create({
 //   baseURL: 'https://connections-api.goit.global',
@@ -14,18 +14,20 @@ export const authInstance = axios.create();
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzMyNzEwMWM0OTVlZDZlMjVmMzk0OGUiLCJpYXQiOjE3MzEzNTg5Nzd9.4GyOmKQQ4FNfjjokZJ0uxt1CM7TEk-y6p-llvnOrj1w
 
 export const setToken = token => {
-  authInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
+  // console.log('token: ', token);
+
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
 export const clearToken = () => {
-  authInstance.defaults.headers.common.Authorization = '';
+  axios.defaults.headers.common.Authorization = '';
 };
 
 export const register = createAsyncThunk(
   'auth/register',
   async (formData, thunkApi) => {
     try {
-      const { data } = await authInstance.post('/users/signup', formData);
+      const { data } = await axios.post('/users/signup', formData);
       console.log('data: ', data);
 
       setToken(data.token);
@@ -40,7 +42,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async (formData, thunkApi) => {
     try {
-      const { data } = await authInstance.post('/users/login', formData);
+      const { data } = await axios.post('/users/login', formData);
       console.log('data: ', data);
 
       setToken(data.token);
@@ -53,7 +55,7 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
   try {
-    const { data } = await authInstance.post('/users/logout');
+    const { data } = await axios.post('/users/logout');
 
     clearToken();
     console.log('logout in Operations');
@@ -67,6 +69,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
 export const refreshUser = createAsyncThunk(
   'auth/refresh',
   async (_, thunkApi) => {
+    // отримуємо токен зі стейту
     const state = thunkApi.getState();
     const token = state.auth.token;
 
@@ -76,7 +79,7 @@ export const refreshUser = createAsyncThunk(
 
     try {
       setToken(token);
-      const { data } = await authInstance.get('/users/current');
+      const { data } = await axios.get('/users/current');
 
       console.log('data: ', data);
 

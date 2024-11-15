@@ -11,9 +11,9 @@ import { fetchContacts } from '../../redux/contacts/operations';
 const ContactsPage = () => {
   const dispatch = useDispatch();
 
-  let myToken = localStorage.getItem('token');
-  console.log('localStorage: ', localStorage);
-  console.log('myToken.parse: ', JSON.parse(myToken));
+  // let myToken = localStorage.getItem('token');
+  // console.log('localStorage: ', localStorage);
+  // console.log('myToken.parse: ', JSON.parse(myToken));
 
   useEffect(() => {
     dispatch(fetchContacts());

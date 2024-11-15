@@ -23,14 +23,7 @@ import { selectIsRefreshing } from './redux/auth/selectors';
 function App() {
   const dispatch = useDispatch();
 
-  // const isLoading = useSelector(selectLoading);
-  // const error = useSelector(selectError);
-
   const isRefreshing = useSelector(selectIsRefreshing);
-
-  // useEffect(() => {
-  //   dispatch(fetchContacts());
-  // }, [dispatch]);
 
   useEffect(() => {
     dispatch(refreshUser());
@@ -43,12 +36,6 @@ function App() {
   return (
     <div>
       <Header />
-      <h1>Phonebook</h1>
-
-      {/* <ContactForm />
-      <SearchBox />
-      {isLoading && !error && <b>Request in progress...</b>}
-      <ContactList /> */}
 
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>

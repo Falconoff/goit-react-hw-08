@@ -3,20 +3,22 @@ import clsx from 'clsx';
 import css from './Navigation.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoggedIn, selectUser } from '../../redux/auth/selectors';
-import { logout } from '../../redux/auth/operations';
+// import { logout } from '../../redux/auth/operations';
+import AuthNav from '../AuthNav/AuthNav';
+import UserMenu from '../UserMenu/UserMenu';
 
 const buildCssClasses = ({ isActive }) =>
   clsx(css.link, isActive && css.active);
 
 const Navigation = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const userData = useSelector(selectUser);
+  // const userData = useSelector(selectUser);
 
-  const onLogout = () => {
-    dispatch(logout());
-    console.log('click on logout');
-  };
+  // const onLogout = () => {
+  //   dispatch(logout());
+  //   console.log('click on logout');
+  // };
 
   return (
     <nav className={css.nav}>
@@ -29,21 +31,23 @@ const Navigation = () => {
       </NavLink>
 
       {isLoggedIn ? (
-        <div>
-          <span>Hello, {userData.name}</span>
-          <button type="button" onClick={onLogout}>
-            Logout
-          </button>
-        </div>
+        <UserMenu />
       ) : (
-        <>
-          <NavLink className={buildCssClasses} to="/register">
-            Register
-          </NavLink>
-          <NavLink className={buildCssClasses} to="/login">
-            Login
-          </NavLink>
-        </>
+        // <div>
+        //   <span>Hello, {userData.name}</span>
+        //   <button type="button" onClick={onLogout}>
+        //     Logout
+        //   </button>
+        // </div>
+        // <>
+        //   <NavLink className={buildCssClasses} to="/register">
+        //     Register
+        //   </NavLink>
+        //   <NavLink className={buildCssClasses} to="/login">
+        //     Login
+        //   </NavLink>
+        // </>
+        <AuthNav />
       )}
     </nav>
   );
