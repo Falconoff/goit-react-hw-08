@@ -1,26 +1,27 @@
-import { Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
-import HomePage from './pages/HomePage/HomePage';
-import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
-import LoginPage from './pages/LoginPage/LoginPage';
-import ContactsPage from './pages/ContactsPage/ContactsPage';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-
-// import ContactList from './components/ContactList/ContactList';
-// import SearchBox from './components/SearchBox/SearchBox';
-// import ContactForm from './components/ContactForm/ContactForm';
-import Header from './components/Header/Header';
-
-// import { fetchContacts } from './redux/contacts/operations';
-// import { selectError, selectLoading } from './redux/contacts/selectors';
+import { selectIsRefreshing } from './redux/auth/selectors';
 import { refreshUser } from './redux/auth/operations';
 
-import './App.css';
-import { selectIsRefreshing } from './redux/auth/selectors';
+import Layout from './components/Layout/Layout';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import RestrictedRoute from './components/RestrictedRoute/RestrictedRoute';
+
+const HomePage = lazy(() => import('../src/pages/HomePage/HomePage'));
+const RegistrationPage = lazy(() =>
+  import('../src/pages/RegistrationPage/RegistrationPage')
+);
+const LoginPage = lazy(() => import('../src/pages/LoginPage/LoginPage'));
+const ContactsPage = lazy(() =>
+  import('../src/pages/ContactsPage/ContactsPage')
+);
+const NotFoundPage = lazy(() =>
+  import('../src/pages/NotFoundPage/NotFoundPage')
+);
+
+import './App.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -31,14 +32,10 @@ function App() {
     dispatch(refreshUser());
   }, [dispatch]);
 
-  if (isRefreshing) {
-    return <div>Refreshing...</div>;
-  }
-
-  return (
-    <div>
-      <Header />
-
+  return isRefreshing ? (
+    <div>Refreshing...</div>
+  ) : (
+    <Layout>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -57,7 +54,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
-    </div>
+    </Layout>
   );
 }
 
