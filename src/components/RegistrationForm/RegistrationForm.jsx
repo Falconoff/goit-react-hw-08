@@ -22,7 +22,6 @@ const RegistrationForm = () => {
 
   const handleSubmit = (values, actions) => {
     console.log('values: ', values);
-    // dispatch(addContact({ ...values }));
     dispatch(register(values));
 
     actions.resetForm();

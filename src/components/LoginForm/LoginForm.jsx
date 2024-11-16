@@ -15,13 +15,10 @@ const INITIAL_VALUES = {
 const LoginForm = () => {
   const dispatch = useDispatch();
 
-  // const nameId = useId();
   const numberId = useId();
   const passId = useId();
 
   const handleSubmit = (values, actions) => {
-    console.log('values: ', values);
-    // dispatch(addContact({ ...values }));
     dispatch(login(values));
 
     actions.resetForm();

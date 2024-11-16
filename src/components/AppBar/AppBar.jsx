@@ -1,4 +1,3 @@
-// import css from './Navigation.module.css';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import AuthNav from '../AuthNav/AuthNav';

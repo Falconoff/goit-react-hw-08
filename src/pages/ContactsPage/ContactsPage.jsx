@@ -19,6 +19,7 @@ const ContactsPage = () => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
+  const contacts = useSelector(selectContacts);
   const isLoading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
@@ -34,13 +35,11 @@ const ContactsPage = () => {
         </p>
       )}
 
-      {Array.isArray(selectContacts) && selectContacts.length === 0 && (
+      {Array.isArray(contacts) && contacts.length === 0 && (
         <p>There are no contacts in your phonebook yet!</p>
       )}
 
-      {Array.isArray(selectContacts) && selectContacts.length > 0 && (
-        <ContactList />
-      )}
+      {Array.isArray(contacts) && contacts.length > 0 && <ContactList />}
     </div>
   );
 };

@@ -3,19 +3,7 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://connections-api.goit.global/';
 
-// export const authInstance = axios.create();
-
-// export const authInstance = axios.create({
-//   baseURL: 'https://connections-api.goit.global',
-//   headers: {},
-// });
-
-// token
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzMyNzEwMWM0OTVlZDZlMjVmMzk0OGUiLCJpYXQiOjE3MzEzNTg5Nzd9.4GyOmKQQ4FNfjjokZJ0uxt1CM7TEk-y6p-llvnOrj1w
-
 export const setToken = token => {
-  // console.log('token: ', token);
-
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
@@ -28,7 +16,6 @@ export const register = createAsyncThunk(
   async (formData, thunkApi) => {
     try {
       const { data } = await axios.post('/users/signup', formData);
-      console.log('data: ', data);
 
       setToken(data.token);
       return data;
@@ -43,7 +30,6 @@ export const login = createAsyncThunk(
   async (formData, thunkApi) => {
     try {
       const { data } = await axios.post('/users/login', formData);
-      console.log('data: ', data);
 
       setToken(data.token);
       return data;
@@ -58,7 +44,6 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
     const { data } = await axios.post('/users/logout');
 
     clearToken();
-    console.log('logout in Operations');
 
     return data;
   } catch (error) {
@@ -80,8 +65,6 @@ export const refreshUser = createAsyncThunk(
     try {
       setToken(token);
       const { data } = await axios.get('/users/current');
-
-      console.log('data: ', data);
 
       return data;
     } catch (error) {
