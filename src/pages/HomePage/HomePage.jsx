@@ -1,7 +1,9 @@
+// import css from "./HomePage.module.css"
+
 const HomePage = () => {
   return (
     <div>
-      <h1>HomePage</h1>
+      <h1 className="visually-hidden">HomePage</h1>
       <p>This app allows you: </p>
       <ul>
         <li>- to save your contacts</li>

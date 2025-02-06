@@ -13,16 +13,16 @@ const Contact = ({ name, number, id }) => {
   };
 
   return (
-    <div className={css.wrapper}>
+    <div className={css.card}>
       <div className={css.data}>
-        <p>
+        <div className={css.data_row}>
           <FaUser className={css.icon} />
-          Name: {name}
-        </p>
-        <p>
+          <span className={css.data_name}>{name}</span>
+        </div>
+        <div className={css.data_row}>
           <FaPhone className={css.icon} />
-          Phone: {number}
-        </p>
+          <span className={css.data_phone}>{number}</span>
+        </div>
       </div>
 
       <div className={css.options}>

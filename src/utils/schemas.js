@@ -7,6 +7,7 @@ export const contactSchema = Yup.object({
     .max(50, 'Too long!'),
   number: Yup.string()
     .required('Number is required')
+    .matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/, 'Wrong format')
     .min(3, 'Too short!')
     .max(50, 'Too long!'),
 });
